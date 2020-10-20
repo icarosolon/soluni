@@ -35,6 +35,4 @@ Route::get('/articles/search/{termo}', [ArticleController::class, 'search']);
 Route::get('/documents', [DocumentController::class, 'index']);
 Route::get('/documents/{id}', [DocumentController::class, 'show']);
 Route::get('/documents/{id}/download', [DocumentController::class, 'download']);
-
-
 Route::post('/document', [DocumentController::class, 'store' ]);
