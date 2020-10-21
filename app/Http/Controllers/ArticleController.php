@@ -15,7 +15,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::orderByDesc('rank_search')
+        ->orderByDesc('rank_like')
+        ->get();
         return response()->json($articles);
     }
 
@@ -53,7 +55,10 @@ class ArticleController extends Controller
     public function show($id)
     {
         try {
-            $response = Article::where('id', $id)->first();
+            $article = Article::findOrFail($id);
+            $article->rank_search++;
+            $article->update(['rank_search' => $article->rank_search]);            
+            $response = $article;
             $statusCode = 200;
         } catch (\Exception $e) {
             $message = new ApiMessages($e->getMessage());
